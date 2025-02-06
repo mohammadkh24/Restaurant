@@ -56,5 +56,6 @@ npm run dev
 
 ---
 
-## 📖 API Documentation  
-🔗 [View API Documentation on Postman]([https://www.postman.com/teamwork-4920/workspace/my-workspace/collection/38477852-16f766a8-55ec-4d88-8ff2-e9cd84a487ea?action=share&creator=38477852](https://www.postman.com/teamwork-4920/workspace/my-workspace/collection/38477852-e15e8a38-f038-499b-b2a5-79a581dbec93?action=share&creator=38477852))  
+## 📖 API Documentation
+🔗 [View API Documentation on Postman](https://www.postman.com/teamwork-4920/workspace/my-workspace/collection/38477852-e15e8a38-f038-499b-b2a5-79a581dbec93?action=share&creator=38477852)  
+ 
