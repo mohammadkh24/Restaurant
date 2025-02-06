@@ -21,7 +21,7 @@ Welcome to the **Restaurant Backend API** – a robust and scalable solution for
 
 ---
 
-## 🚀 Getting Started  
+## 🚀 Getting Started   
 
 ### 1️⃣ Clone the Repository  
 ```bash
