@@ -2,7 +2,8 @@ const express = require("express")
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRouter = require("./routes/auth")
-const usersRouter = require("./routes/users")
+const usersRouter = require("./routes/users");
+const categoriesRouter = require("./routes/categories");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 // Routes
 app.use("/auth" , authRouter)
 app.use("/users" , usersRouter)
+app.use("/categories" , categoriesRouter)
 
 // Not-Found Page
 app.use((req, res) => {
