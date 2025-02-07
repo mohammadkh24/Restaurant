@@ -11,22 +11,12 @@ router.route("/").get(discountsController.getAll);
 
 router
   .route("/set")
-  .get(
+  .post(
     discountValidator(),
     validateMiddleware,
     authMiddleware,
     isAdminMiddleware,
     discountsController.set
-  );
-  
-router
-  .route("/setAll")
-  .get(
-    discountValidator(),
-    validateMiddleware,
-    authMiddleware,
-    isAdminMiddleware,
-    discountsController.setAll
   );
 
 router
