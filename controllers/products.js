@@ -59,6 +59,7 @@ exports.add = async (req, res) => {
     priceWithoutDiscount,
     priceWithDiscount,
     categoryID,
+    discount
   } = req.body;
 
   const isCategoryExists = await categoriesModel.findOne({ _id: categoryID });
@@ -77,7 +78,7 @@ exports.add = async (req, res) => {
     priceWithoutDiscount,
     categoryID,
     image: req.file.filename,
-    discount: "0",
+    discount
   });
 
   return res.status(201).json({
@@ -118,6 +119,7 @@ exports.edit = async (req, res) => {
     priceWithoutDiscount,
     priceWithDiscount,
     categoryID,
+    discount
   } = req.body;
 
   if (!isValidObjectId(id)) {
@@ -133,6 +135,7 @@ exports.edit = async (req, res) => {
     priceWithDiscount,
     priceWithoutDiscount,
     categoryID,
+    discount
   });
 
   if (!updatedProduct) {

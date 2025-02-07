@@ -58,3 +58,29 @@ exports.changeRole = async (req, res) => {
     user,
   });
 };
+
+exports.edit = async (req, res) => {
+  const { name, lastName, phone, address, email } = req.body;
+
+  if (!name || !lastName || !phone || !email || !address) {
+    return res.status(400).json({ message: "لطفا تمامی فیلدها را پر کنید" });
+  }
+
+  const editedUser = await usersModel
+    .findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        name,
+        lastName,
+        phone,
+        address,
+        email,
+      }
+    )
+    .select("-password");
+
+  return res.status(200).json({
+    message: "اطلاعات کاربر با موفقیت ویرایش شد",
+    editedUser
+  });
+};

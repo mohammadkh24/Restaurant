@@ -12,7 +12,6 @@ const schema = mongoose.Schema(
     },
     discount: {
       type: String,
-      required: true,
       default: 0,
     },
     image: {

@@ -6,6 +6,7 @@ const usersRouter = require("./routes/users");
 const categoriesRouter = require("./routes/categories");
 const productsRouter = require("./routes/products")
 const discountsRouter = require("./routes/discounts")
+const productUsersRouter = require("./routes/productUsers")
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/users", usersRouter);
 app.use("/categories", categoriesRouter);
 app.use("/products", productsRouter);
 app.use("/discounts", discountsRouter);
+app.use("/orders", productUsersRouter);
 
 // Not-Found Page
 app.use((req, res) => {
