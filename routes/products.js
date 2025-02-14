@@ -18,15 +18,15 @@ router.route("/category/:categoryID").get(productsController.getByCategory);
 router
   .route("/add")
   .post(
-    authMiddleware,
-    isAdminMiddleware,
-    multer({ storage: multerStorage, limits: { fileSize: 300000 } }).single(
-      "image"
-    ),
-    productValidator(),
-    validateMiddleware,
-    productsController.add
+    authMiddleware, 
+    isAdminMiddleware, 
+    multer({ storage: multerStorage, limits: { fileSize: 300000 } }).single("image"), 
+    productValidator(), 
+    validateMiddleware, 
+    productsController.add 
   );
+
+
 
 router
   .route("/:id/remove")

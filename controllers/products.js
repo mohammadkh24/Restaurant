@@ -52,40 +52,49 @@ exports.getByCategory = async (req, res) => {
 };
 
 exports.add = async (req, res) => {
-  const {
-    title,
-    description,
-    timeRequired,
-    priceWithoutDiscount,
-    priceWithDiscount,
-    categoryID,
-    discount
-  } = req.body;
+  try {
+    const {
+      title,
+      description,
+      timeRequired,
+      priceWithoutDiscount,
+      priceWithDiscount,
+      categoryID,
+      discount
+    } = req.body;
 
-  const isCategoryExists = await categoriesModel.findOne({ _id: categoryID });
+    if (!req.file) {
+      return res.status(400).json({
+        message: "تصویری ارسال نشده است!",
+      });
+    }
 
-  if (!isCategoryExists) {
-    return res.status(404).json({
-      message: "دسته بندی پیدا نشد",
+    const isCategoryExists = await categoriesModel.findById(categoryID);
+    if (!isCategoryExists) {
+      return res.status(404).json({ message: "دسته‌بندی پیدا نشد" });
+    }
+
+    const addedProduct = await productsModel.create({
+      title,
+      description,
+      timeRequired,
+      priceWithDiscount,
+      priceWithoutDiscount,
+      categoryID,
+      image: req.file.filename, // مقدار فایل بررسی شد
+      discount
     });
+
+    return res.status(201).json({
+      message: "محصول با موفقیت اضافه شد",
+      addedProduct,
+    });
+  } catch (error) {
+    console.error("Error in adding product:", error);
+    return res.status(500).json({ message: "خطای سرور" });
   }
-
-  const addedProduct = await productsModel.create({
-    title,
-    description,
-    timeRequired,
-    priceWithDiscount,
-    priceWithoutDiscount,
-    categoryID,
-    image: req.file.filename,
-    discount
-  });
-
-  return res.status(201).json({
-    message: "محصول با موفقیت اضافه شد",
-    addedProduct,
-  });
 };
+
 
 exports.remove = async (req, res) => {
   const { id } = req.params;

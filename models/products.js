@@ -23,11 +23,11 @@ const schema = mongoose.Schema(
       required: true,
     },
     priceWithoutDiscount: {
-      type: String,
+      type: Number,
       required: true,
     },
     priceWithDiscount: {
-      type: String,
+      type: Number,
       required: true,
     },
     categoryID : {
