@@ -39,7 +39,7 @@ Create a `.env` file in the root directory and add the following:
 ```ini
 PORT=5000
 DB_URI=mongodb://localhost:27017/Restaurant
-JWT_SECRET="your-secure-jwt-secret"
+JWT_SECRET="8ab4550b87c84af25ebe14a6f9a00a330935c961ce69c5259af29c6ae6ff3eaff8dda80d64b1bc14f01cd1f52f2b7fadb5a1a6fa024819fb2000a9b85ee5954c"
 ```
 
 ### 4️⃣ Start the Server  
