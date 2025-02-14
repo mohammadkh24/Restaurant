@@ -56,7 +56,6 @@ exports.add = async (req, res) => {
     const {
       title,
       description,
-      timeRequired,
       priceWithoutDiscount,
       priceWithDiscount,
       categoryID,
@@ -77,7 +76,6 @@ exports.add = async (req, res) => {
     const addedProduct = await productsModel.create({
       title,
       description,
-      timeRequired,
       priceWithDiscount,
       priceWithoutDiscount,
       categoryID,

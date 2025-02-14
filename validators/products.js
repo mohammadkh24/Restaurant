@@ -21,11 +21,6 @@ const productValidator = () => {
     //   .matches(/\.(jpeg|jpg|gif|png)$/i)
     //   .withMessage("آدرس تصویر باید فرمت معتبر jpeg، jpg، gif یا png داشته باشد"),
 
-    body("timeRequired")
-      .isString()
-      .withMessage("زمان مورد نیاز باید یک رشته باشد")
-      .isLength({ min: 3 })
-      .withMessage("زمان مورد نیاز باید حداقل ۳ کاراکتر داشته باشد"),
 
     body("priceWithoutDiscount")
       .isFloat({ min: 0 })

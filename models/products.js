@@ -11,14 +11,10 @@ const schema = mongoose.Schema(
       required: true,
     },
     discount: {
-      type: String,
+      type: Number,
       default: 0,
     },
     image: {
-      type: String,
-      required: true,
-    },
-    timeRequired: {
       type: String,
       required: true,
     },

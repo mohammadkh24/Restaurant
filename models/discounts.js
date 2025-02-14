@@ -8,7 +8,7 @@ const schema = mongoose.Schema(
       required : true
     },
     discount: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
