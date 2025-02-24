@@ -8,6 +8,11 @@ exports.getAll = async (req, res) => {
 
   return res.json(productUser);
 };
+exports.orders = async (req, res) => {
+  const productUser = await productUsersModel.find({}).populate("productID", "title").populate("userID" , "-password")
+
+  return res.json(productUser);
+};
 
 exports.add = async (req, res) => {
   const { id } = req.params;
