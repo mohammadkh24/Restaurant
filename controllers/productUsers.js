@@ -43,3 +43,26 @@ exports.add = async (req, res) => {
     message: "محصول به سفارشات اضافه شد",
   });
 };
+
+exports.remove = async (req,res) => {
+  const {id} = req.params;
+
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({
+      message : "آیدی محصول معتبر نیست"
+    })
+  }
+
+  const removeOrder = await productUsersModel.findOneAndDelete({ _id : id });
+
+  if (!removeOrder) {
+    return res.status(404).json({
+      message : "محصول پیدا نشد"
+    })
+  }
+
+  return res.status(200).json({
+    message : "محصول با موفقیت حذف شد",
+    removedOrder : removeOrder
+  })
+}
