@@ -16,6 +16,10 @@ exports.remove = async (req, res) => {
     });
   }
 
+  if (id === req.user._id.toString()) {
+    return res.status(400).json({ message: "ادمین نمی‌تواند خودش را حذف کند" });
+  }
+
   const removeUser = await usersModel.findOneAndDelete({ _id: id });
 
   if (!removeUser) {
