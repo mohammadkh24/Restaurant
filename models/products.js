@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { path } = require("../app");
 
 const schema = mongoose.Schema(
   {
@@ -15,8 +16,14 @@ const schema = mongoose.Schema(
       default: 0,
     },
     image: {
-      type: String,
-      required: true,
+      path : {
+        type : String,
+        required : true
+      },
+      filename : {
+        type : String,
+        required : true
+      },
     },
     priceWithoutDiscount: {
       type: Number,

@@ -59,7 +59,7 @@ exports.add = async (req, res) => {
       priceWithoutDiscount,
       priceWithDiscount,
       categoryID,
-      discount
+      discount,
     } = req.body;
 
     if (!req.file) {
@@ -73,14 +73,19 @@ exports.add = async (req, res) => {
       return res.status(404).json({ message: "دسته‌بندی پیدا نشد" });
     }
 
+    const mediaUrlPath = `/covers/${req.file.filename}`;
+
     const addedProduct = await productsModel.create({
       title,
       description,
       priceWithDiscount,
       priceWithoutDiscount,
       categoryID,
-      image: req.file.filename, // مقدار فایل بررسی شد
-      discount
+      image: {
+        filename: req.file.filename,
+        path: mediaUrlPath,
+      },
+      discount,
     });
 
     return res.status(201).json({
@@ -92,7 +97,6 @@ exports.add = async (req, res) => {
     return res.status(500).json({ message: "خطای سرور" });
   }
 };
-
 
 exports.remove = async (req, res) => {
   const { id } = req.params;
@@ -126,7 +130,7 @@ exports.edit = async (req, res) => {
     priceWithoutDiscount,
     priceWithDiscount,
     categoryID,
-    discount
+    discount,
   } = req.body;
 
   if (!isValidObjectId(id)) {
@@ -142,7 +146,7 @@ exports.edit = async (req, res) => {
     priceWithDiscount,
     priceWithoutDiscount,
     categoryID,
-    discount
+    discount,
   });
 
   if (!updatedProduct) {

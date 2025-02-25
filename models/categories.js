@@ -7,8 +7,14 @@ const schema = mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
-      required: true,
+      path : {
+        type : String,
+        required : true
+      },
+      filename : {
+        type : String,
+        required : true
+      },
     },
   },
   { timestamps: true }

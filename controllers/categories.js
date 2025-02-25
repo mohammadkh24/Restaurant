@@ -10,6 +10,7 @@ exports.getAll = async (req, res) => {
 exports.add = async (req, res) => {
   const { title } = req.body;
 
+  const mediaUrlPath = `/covers/${req.file.filename}`;
   const isCategoryExists = await categoriesModel.findOne({ title });
 
   if (isCategoryExists) {
@@ -20,7 +21,10 @@ exports.add = async (req, res) => {
 
   const category = await categoriesModel.create({
     title,
-    image: req.file.filename,
+    image: {
+      filename: req.file.filename,
+      path: mediaUrlPath,
+    },
   });
 
   return res.status(201).json({
@@ -65,7 +69,7 @@ exports.edit = async (req, res) => {
     { _id: id },
     {
       title: req.body.title,
-      image : req.file.filename
+      image: req.file.filename,
     }
   );
 

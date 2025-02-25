@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path")
 const bodyParser = require("body-parser");
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
@@ -9,6 +10,9 @@ const discountsRouter = require("./routes/discounts")
 const productUsersRouter = require("./routes/productUsers")
 
 const app = express();
+
+// Set Public
+app.use(express.static(path.join(__dirname, "public")));
 
 // Get req.body
 app.use(cors());
