@@ -1,5 +1,6 @@
 const { isValidObjectId } = require("mongoose");
 const categoriesModel = require("../models/categories");
+const productsModel = require("../models/products")
 
 exports.getAll = async (req, res) => {
   const categories = await categoriesModel.find({}).lean();
@@ -43,6 +44,7 @@ exports.remove = async (req, res) => {
   }
 
   const removedCategory = await categoriesModel.findOneAndDelete({ _id: id });
+  const removedProductsCategory = await productsModel.findOneAndDelete({ categoryID : id })
 
   if (!removedCategory) {
     return res.status(404).json({
