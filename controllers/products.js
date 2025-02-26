@@ -133,6 +133,14 @@ exports.edit = async (req, res) => {
     discount,
   } = req.body;
 
+  if (!req.file) {
+    return res.status(400).json({
+      message : "تصویری ارسال نشده"
+    })
+  }
+
+  const mediaUrlPath = `/covers/${req.file.filename}`
+
   if (!isValidObjectId(id)) {
     return res.status(400).json({
       message: "آیدی محصول معتبر نیست",
@@ -147,6 +155,10 @@ exports.edit = async (req, res) => {
     priceWithoutDiscount,
     categoryID,
     discount,
+    image: {
+      filename: req.file.filename,
+      path: mediaUrlPath,
+    },
   });
 
   if (!updatedProduct) {
