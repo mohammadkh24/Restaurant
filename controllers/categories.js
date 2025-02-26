@@ -58,6 +58,7 @@ exports.remove = async (req, res) => {
 
 exports.edit = async (req, res) => {
   const { id } = req.params;
+  const mediaUrlPath = `/covers/${req.file.filename}`;
 
   if (!isValidObjectId(id)) {
     return res.status(400).json({
@@ -65,11 +66,20 @@ exports.edit = async (req, res) => {
     });
   }
 
+  if (!req.file) {
+    return res.status(400).json({
+      message: "تصویری ارسال نشده",
+    });
+  }
+
   const editedCategory = await categoriesModel.findOneAndUpdate(
     { _id: id },
     {
       title: req.body.title,
-      image: req.file.filename,
+      image: {
+        filename: req.file.filename,
+        path: mediaUrlPath,
+      },
     }
   );
 
