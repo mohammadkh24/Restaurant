@@ -95,4 +95,4 @@ exports.edit = async (req, res) => {
     message: "دسته بندی با موفقیت ویرایش شد",
     editedCategory,
   });
-};
+}
