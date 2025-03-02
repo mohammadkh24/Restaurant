@@ -4,65 +4,66 @@ const usersModel = require("../models/users");
 const productModel = require("../models/products");
 
 exports.getAll = async (req, res) => {
-  const productUser = await productUsersModel.find({ userID: req.user._id }).populate("productID")
+    const productUser = await productUsersModel
+        .find({ userID: req.user._id })
+        .populate("productID");
 
-  return res.json(productUser);
+    return res.json(productUser);
 };
+
 exports.orders = async (req, res) => {
-  const productUser = await productUsersModel.find({}).populate("productID", "title").populate("userID" , "-password")
+    const productUser = await productUsersModel
+        .find({})
+        .populate("productID")
+        .populate("userID", "-password");
 
-  return res.json(productUser);
+    return res.json(productUser);
 };
 
-exports.add = async (req, res) => {
-  const { id } = req.params;
-  const user = await usersModel
-    .findOne({ _id: req.user._id })
-    .select("-password");
+exports.checkout = async (req, res) => {
+    try {
+        const { productID, quantity } = req.body;  // دریافت یک محصول به صورت جداگانه
 
-  if (!isValidObjectId(id)) {
-    return res.status(400).json({
-      message: "آیدی محصول معتبر نیست",
-    });
-  }
+        // بررسی اینکه محصول و تعداد مشخص شده است
+        if (!productID || !quantity) {
+            return res.status(400).json({ message: "محصول یا تعداد مشخص نشده است!" });
+        }
 
-  const product = await productModel.findOne({ _id: id });
+        if (!isValidObjectId(productID)) {
+            return res.status(400).json({ message: `آیدی محصول ${productID} معتبر نیست` });
+        }
 
-  if (!product) {
-    return res.status(404).json({
-      message: "محصول وجود ندارد",
-    });
-  }
+        // بررسی موجودیت محصول در دیتابیس
+        const product = await productModel.findById(productID);
+        if (!product) {
+            return res.status(404).json({ message: `محصول ${productID} پیدا نشد` });
+        }
 
-  const productUser = await productUsersModel.create({
-    userID: user,
-    productID: product,
-  });
+        // ساخت یا به روزرسانی سفارش در دیتابیس
+        const user = await usersModel.findById(req.user._id).select("-password");
 
-  return res.status(201).json({
-    message: "محصول به سفارشات اضافه شد",
-  });
+        // چک کردن اینکه آیا این محصول قبلاً به سفارشات اضافه شده است یا نه
+        const existingOrder = await productUsersModel.findOne({ userID: user._id, productID: productID });
+        
+        if (existingOrder) {
+            // اگر محصول قبلاً موجود بود، تعداد آن را به روزرسانی می‌کنیم
+            existingOrder.quantity += quantity;
+            await existingOrder.save();
+        } else {
+            // اگر محصول قبلاً موجود نبود، یک سفارش جدید ایجاد می‌کنیم
+            await productUsersModel.create({
+                userID: user,
+                productID: product,
+                quantity: quantity,
+            });
+        }
+
+        return res.status(201).json({
+            message: "محصول به سفارشات اضافه شد",
+        });
+    } catch (error) {
+        return res.status(500).json({ message: "خطای سرور!", error });
+    }
 };
 
-exports.remove = async (req,res) => {
-  const {id} = req.params;
 
-  if (!isValidObjectId(id)) {
-    return res.status(400).json({
-      message : "آیدی محصول معتبر نیست"
-    })
-  }
-
-  const removeOrder = await productUsersModel.findOneAndDelete({ _id : id });
-
-  if (!removeOrder) {
-    return res.status(404).json({
-      message : "محصول پیدا نشد"
-    })
-  }
-
-  return res.status(200).json({
-    message : "محصول با موفقیت حذف شد",
-    removedOrder : removeOrder
-  })
-}

@@ -5,9 +5,13 @@ const isAdminMiddleware = require("../middlewares/isAdmin");
 
 const router = express.Router();
 
-router.route("/").get(authMiddleware,productUsersController.getAll);
-router.route("/all").get(authMiddleware , isAdminMiddleware,productUsersController.orders);
-router.route("/:id/add").post(authMiddleware,productUsersController.add);
-router.route("/:id/remove").delete(authMiddleware,productUsersController.remove);
+// دریافت سفارشات کاربر
+router.get("/", authMiddleware, productUsersController.getAll);
+
+// دریافت تمام سفارشات (ادمین)
+router.get("/all", authMiddleware , isAdminMiddleware, productUsersController.orders);
+
+// دریافت سبد خرید از فرانت و ثبت سفارش
+router.post("/checkout", authMiddleware, productUsersController.checkout);
 
 module.exports = router;
