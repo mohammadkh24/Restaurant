@@ -60,7 +60,7 @@ exports.checkout = async (req, res) => {
       for (let item of items) {
         const productIndex = existingOrder.products.findIndex(
           (product) => product.productID.toString() === item.productID
-        );
+        );;
 
         if (productIndex !== -1) {
           // اگر محصول قبلاً موجود بود، تعداد آن را به روز می‌کنیم
