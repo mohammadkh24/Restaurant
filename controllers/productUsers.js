@@ -10,9 +10,9 @@ exports.getAll = async (req, res) => {
       .populate("products.productID");
 
     // حذف محصولات نامعتبر قبل از ارسال پاسخ
-    productUser.forEach(order => {
-      order.products = order.products.filter(product => product.productID !== null);
-    });
+    // productUser.forEach(order => {
+    //   order.products = order.products.filter(product => product.productID !== null);
+    // });
 
     return res.json(productUser);
   } catch (error) {
